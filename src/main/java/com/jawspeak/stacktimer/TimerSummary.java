@@ -30,11 +30,11 @@ public class TimerSummary {
 
   private String summaryString(String prefix) {
     StringBuffer sb = new StringBuffer();
-    sb.append(prefix).append(name).append(" start ").append(startMillis).append(" ms\n");
+    sb.append(prefix).append(name).append(" start ").append(startMillis).append("ms\n");
     for (TimerSummary nestedSummary : nestedSummaries) {
       sb.append(nestedSummary.summaryString(prefix + "  "));
     }
-    sb.append(prefix).append(name).append(" stop ").append(stopMillis).append(" ms\n");
+    sb.append(prefix).append(name).append(" stop ").append(stopMillis).append("ms, duration ").append(stopMillis - startMillis).append("ms\n");
     return sb.toString();
   }
 

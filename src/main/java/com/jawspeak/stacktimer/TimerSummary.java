@@ -37,6 +37,22 @@ public class TimerSummary {
     sb.append(prefix).append(name).append(" stop ").append(stopMillis).append("ms, duration ").append(stopMillis - startMillis).append("ms\n");
     return sb.toString();
   }
+  
+  public String getName() {
+    return name;
+  }
+
+  public long getStartMillis() {
+    return startMillis;
+  }
+
+  public long getStopMillis() {
+    return stopMillis;
+  }
+
+  public List<TimerSummary> getNestedSummaries() {
+    return nestedSummaries;
+  }
 
   @Override
   public int hashCode() {

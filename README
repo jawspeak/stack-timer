@@ -1,0 +1,8 @@
+Objective is to be able to record timings (in a webapp for instance), 
+for all backend calls.
+
+
+To have an eclipse project, run:
+   mvn eclipse:eclipse -DdownloadSources=true
+   
+ 

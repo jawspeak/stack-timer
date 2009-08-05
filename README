@@ -3,6 +3,6 @@ for all backend calls.
 
 
 To have an eclipse project, run:
-   mvn eclipse:eclipse -DdownloadSources=true
+   ./mvn_eclipse_gen.sh
    
  

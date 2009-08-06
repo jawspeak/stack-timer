@@ -2,8 +2,6 @@ package com.jawspeak.stacktimer;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
@@ -21,7 +19,7 @@ public class TimerTest {
     clock.incrementBy(1234L);
     timer.stop();
     TimerSummary summary = timer.doneUsing();
-    assertEquals(new TimerSummary("name", 0L, 1234L, new ArrayList()), summary);
+    assertEquals(new TimerSummary("name", 0L, 1234L), summary);
   }
 
   @Test
@@ -40,7 +38,7 @@ public class TimerTest {
     TimerSummary summary = timer0.doneUsing();
     TimerSummary expectedSummary = new TimerSummary("timer0", 0L, 15L, Lists.newArrayList(
         new TimerSummary("timer01", 1L, 15L, Lists.newArrayList(
-            new TimerSummary("timer011", 3L, 7L, new ArrayList())))));
+            new TimerSummary("timer011", 3L, 7L)))));
     
     assertEquals(expectedSummary, summary);
   }

@@ -20,6 +20,13 @@ public class TimerSummary {
     this.nestedSummaries = nestedSummaries;
   }
 
+  public TimerSummary(String name, long startMillis, long stopMillis) {
+    this.name = name;
+    this.startMillis = startMillis;
+    this.stopMillis = stopMillis;
+    this.nestedSummaries = Lists.newArrayList();
+  }
+
   public String toString() {
     return name + " " + startMillis + "-" + stopMillis + " [" + (nestedSummaries != null ? nestedSummaries.size() : "") + "]";
   }

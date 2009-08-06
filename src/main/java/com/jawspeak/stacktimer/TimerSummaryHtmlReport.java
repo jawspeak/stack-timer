@@ -36,14 +36,14 @@ public class TimerSummaryHtmlReport {
   }
   
   private void renderChart() {
-    sb.append("Response Time For Requests\n<div id=\"chart-stats\">\n");    
+    sb.append("Server Response Time For Request\n<div id=\"chart-stats\">\n");    
     renderTimelineSummary(0, timerSummary);
     sb.append("</div>\n");
   }
 
   private void renderTimelineSummary(int nestingLevel, TimerSummary summary) { 
     long durationMillis = summary.getStopMillis() - summary.getStartMillis();
-    int scaleFactor = 10;
+    int scaleFactor = 1;
     sb.append("<div class=\"timeline\" style=\"left: ").append(summary.getStartMillis() * scaleFactor)
       .append("px; top: ").append(nestingLevel * BAR_LINE_HEIGHT)
       .append("px; width: ").append(durationMillis * scaleFactor)

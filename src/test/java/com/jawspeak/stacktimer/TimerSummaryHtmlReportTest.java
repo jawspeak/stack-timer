@@ -22,9 +22,9 @@ public class TimerSummaryHtmlReportTest {
 
   @Test
   public void notSoMuchATestAsASampleGenerator2() throws Exception {
-    TimerSummary nestedSummary1 = new TimerSummary("timer01", 5L, 11L, Lists.newArrayList(new TimerSummary("timer001", 5L, 10L, Lists.<TimerSummary>newArrayList(new TimerSummary("timer0001" ,6L, 7L)))));
-    TimerSummary nestedSummary2 = new TimerSummary("timer02", 11L, 15L);
-    TimerSummary summary = new TimerSummary("timer0", 0L, 100L, Lists.newArrayList(nestedSummary1, nestedSummary2));
+    TimerSummary nestedSummary1 = new TimerSummary("timer01", 5L, 110L, Lists.newArrayList(new TimerSummary("timer001", 5L, 100L, Lists.<TimerSummary>newArrayList(new TimerSummary("timer0001" ,60L, 70L)))));
+    TimerSummary nestedSummary2 = new TimerSummary("timer02", 110L, 150L);
+    TimerSummary summary = new TimerSummary("timer0", 0L, 400L, Lists.newArrayList(nestedSummary1, nestedSummary2));
     TimerSummaryHtmlReport htmlReport = new TimerSummaryHtmlReport(summary);
     
     FileWriter fileWriter = new FileWriter("target/sample-report-output-2.html");

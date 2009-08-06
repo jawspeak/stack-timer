@@ -23,7 +23,7 @@ public class TimerSummaryHtmlReport {
     		"    position: relative;\n" + 
     		"\n" + 
     		"}\n" + 
-    		".timeline {\n" + 
+    		"div.timeline {\n" + 
     		"    position: absolute;\n" + 
     		"    line-height: "+BAR_LINE_HEIGHT+"px;\n" +
     		"    border: thin grey solid;\n" +

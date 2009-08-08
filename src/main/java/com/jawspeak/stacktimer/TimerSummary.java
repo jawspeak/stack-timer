@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import com.google.common.collect.Lists;
 
+// TODO(jwolter) I want to combine this with the Timer object. Very similar!
 public class TimerSummary {
   private final String name;
   private final long startMillis;

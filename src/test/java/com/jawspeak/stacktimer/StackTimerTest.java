@@ -24,7 +24,7 @@ public class StackTimerTest {
   @After
   public void teardown() {
     // clean up the global state from the statics
-    StackTimer.doneUsing();
+    StackTimer.summarize();
     StackTimer.setClockForTest(new RealtimeClock()); 
     StackTimer.setLogger(null);
   }
@@ -36,7 +36,7 @@ public class StackTimerTest {
     StackTimer.stop("timer0");
 //    assertEquals(1, spyLogger.loggedMessages.size()); // ???? or empty?
     assertEquals(0, spyLogger.errorMessages.size());
-    TimerSummary summary = StackTimer.doneUsing();
+    TimerSummary summary = StackTimer.summarize();
     assertNotNull(summary);
   }
   
@@ -51,10 +51,10 @@ public class StackTimerTest {
   }
 
   @Test
-  public void doneUsingThenStopLogsError() throws Exception {
+  public void summarizeThenStopLogsError() throws Exception {
     StackTimer.start("timer0");
     StackTimer.stop("timer0");
-    StackTimer.doneUsing();
+    StackTimer.summarize();
     StackTimer.stop("timer0");
     assertEquals(0, spyLogger.loggedMessages.size()); // ???? or empty?
     assertEquals(1, spyLogger.errorMessages.size());

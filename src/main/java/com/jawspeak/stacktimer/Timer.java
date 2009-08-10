@@ -3,14 +3,14 @@ package com.jawspeak.stacktimer;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import com.jawspeak.util.Clock;
 
 public class Timer {
 
   private final Clock clock;
-  private long startTime;
-  private long stopTime;
-  private boolean isDone;
+  private long startTime = -1L;
+  private long stopTime = -1L;
   private final String name;
   private final List<Timer> nestedTimers = new ArrayList<Timer>();
   private final StackTimerLogger stackTimerLogger;
@@ -22,46 +22,44 @@ public class Timer {
   }
 
   public void start() {
-    verifyNotDoneYet();
-    // should we verify not started?
+    if (startTime > 0) {
+      stackTimerLogger.error("You can't start this timer [" + name + "] because it was already started.");
+      return;
+    }
     startTime = clock.currentTimeMillis();
   }
 
-  private void verifyNotDoneYet() {
-    if (isDone)
-      stackTimerLogger.error("You can't use this timer because it was turned off and summarized.");
-  }
-
   public void stop() {
-    verifyNotDoneYet();
-    if (stopTime > 0) {
-      stackTimerLogger.error("You can't stop this timer [" + name + "] multiple times, but you are attempting to.");
+    if (startTime < 0) {
+      stackTimerLogger.error("You can't stop this timer [" + name + "] until you first start it.");
       return;
     }
-    if (startTime == 0) {
-      stackTimerLogger.error("You can't stop this timer [" + name + "] until you first start it, but you are attempting to.");
+    if (stopTime > 0) {
+      stackTimerLogger.error("You can't stop this timer [" + name + "] multiple times, it was already stopped at " + stopTime);
       return;
     }
     stopTime = clock.currentTimeMillis();
   }
 
-  public TimerSummary doneUsing() {
-    return doneUsing(startTime);
+  public TimerSummary summarize() {
+    return summarize(startTime);
   }
 
-  private TimerSummary doneUsing(long withStartTimeOffset) {
-    isDone = true;
-    List<TimerSummary> nestedSummaries = new ArrayList<TimerSummary>();
-    for (Timer nestedTimer : nestedTimers) {
-      nestedSummaries.add(nestedTimer.doneUsing(withStartTimeOffset));
+  private TimerSummary summarize(long withStartTimeOffset) {
+    if (stopTime < 0) {
+      stackTimerLogger.error("You can't complete this timer [" + name + "] until it is first stopped");
+      return null; // probably don't want to return null
     }
-    // TODO more tests needed for offset stuff
-    return new TimerSummary(name, startTime - withStartTimeOffset, stopTime - withStartTimeOffset,
-        nestedSummaries);
+
+    List<TimerSummary> nestedSummaries = Lists.newArrayList();
+    for (Timer nestedTimer : nestedTimers) {
+      nestedSummaries.add(nestedTimer.summarize(withStartTimeOffset));
+    }
+    return new TimerSummary(name, startTime - withStartTimeOffset, stopTime - withStartTimeOffset, nestedSummaries);
   }
 
   public Timer nestedStartedTimer(String name) {
-    Timer nestedTimer = new Timer(name, clock, null);
+    Timer nestedTimer = new Timer(name, clock, stackTimerLogger);
     nestedTimers.add(nestedTimer);
     nestedTimer.start();
     return nestedTimer;

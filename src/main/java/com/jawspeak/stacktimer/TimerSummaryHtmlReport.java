@@ -50,8 +50,9 @@ public class TimerSummaryHtmlReport {
       .append("px;\" title=\"[").append(summary.getStartMillis()).append("-").append(summary.getStopMillis()).append("ms] ").append(durationMillis).append("ms\">")
       .append(summary.getName()).append("</div>");
     
+    nestingLevel++;
     for (TimerSummary nestedSummary : summary.getNestedSummaries()) {
-      renderTimelineSummary(++nestingLevel, nestedSummary);
+      renderTimelineSummary(nestingLevel, nestedSummary);
     }
   }
 

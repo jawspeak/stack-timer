@@ -31,4 +31,5 @@ public class TimerSummaryHtmlReportTest {
     fileWriter.append(htmlReport.render());
     fileWriter.close();
   }
+
 }
